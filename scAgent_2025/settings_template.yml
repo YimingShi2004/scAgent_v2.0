@@ -1,0 +1,52 @@
+# scAgent Configuration Template
+# Copy this file to settings.yml and update with your values
+
+# Database Configuration
+database:
+  host: ${DB_HOST:'localhost'}
+  port: ${DB_PORT:5432}
+  name: ${DB_NAME:'your_database'}
+  user: ${DB_USER:'your_username'}
+  password: ${DB_PASSWORD:'your_password'}
+  schema: ${DB_SCHEMA:'merged'}
+
+# AI Model Configuration
+model:
+  name: ${MODEL_NAME:'Qwen3-235B-A22B'}
+  api_base: ${MODEL_API_BASE:'http://your-api-endpoint/v1'}
+  api_key: ${MODEL_API_KEY:''}  # Optional, if your API requires authentication
+  max_workers: ${MAX_AI_WORKERS:15}
+  timeout: ${AI_TIMEOUT:60}
+
+# Processing Configuration
+processing:
+  default_batch_size: 5000
+  max_batch_size: 10000
+  enable_ai_by_default: true
+  confidence_threshold: 0.7
+  min_quality_score: 3
+
+# Logging Configuration
+logging:
+  level: ${LOG_LEVEL:'INFO'}
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  file: ${LOG_FILE:'scagent.log'}
+
+# Table Configuration
+tables:
+  sra_geo_ft2:
+    schema: 'merged'
+    table: 'sra_geo_ft2'
+    primary_key: 'sra_ID'
+    
+# Export Configuration
+export:
+  csv_encoding: 'utf-8'
+  json_indent: 2
+  include_statistics: true
+
+# Performance Tuning
+performance:
+  connection_pool_size: 10
+  statement_timeout: 300000  # 5 minutes in milliseconds
+  lock_timeout: 10000  # 10 seconds in milliseconds 

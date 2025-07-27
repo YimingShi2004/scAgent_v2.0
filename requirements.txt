@@ -1,0 +1,31 @@
+# Core dependencies
+psycopg2-binary>=2.9.0
+pandas>=1.5.0
+numpy>=1.20.0
+tqdm>=4.65.0
+
+# Database and data processing
+sqlalchemy>=1.4.0
+
+# Configuration management
+dynaconf>=3.1.0
+PyYAML>=6.0
+
+# HTTP client for AI API
+requests>=2.28.0
+
+# CLI and display
+rich>=13.0.0
+click>=8.0.0
+
+# Concurrent processing
+concurrent-futures>=3.1.0; python_version < '3.2'
+
+# Testing (optional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Development tools (optional)
+black>=22.0.0
+flake8>=5.0.0
+mypy>=0.990 

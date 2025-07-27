@@ -1,0 +1,97 @@
+default:
+  # Database configuration
+  db_host: "10.28.1.24"
+  db_port: 5432
+  db_user: "yanglab"
+  db_password: "labyang"
+  db_name: "scagent"
+  db_timeout: 30
+  service_tier: "standard"
+  flex_timeout: 180
+  
+  # Model API configuration
+  model_api_base: "http://10.28.1.21:30080/v1"
+  model_name: "Qwen3-235B-A22B"
+  
+  # Model parameters for thinking mode
+  thinking_mode:
+    temperature: 0.6
+    top_p: 0.95
+    top_k: 20
+    max_tokens: 32000
+    enable_thinking: true
+  
+  # Model parameters for no-thinking mode  
+  no_thinking_mode:
+    temperature: 0.7
+    top_p: 0.8
+    top_k: 20
+    max_tokens: 32000
+    presence_penalty: 1.5
+    enable_thinking: false
+
+  # Agent-specific model configurations
+  models:
+    default: "Qwen3-235B-A22B"
+    data_analyzer: "Qwen3-235B-A22B"
+    data_cleaner: "Qwen3-235B-A22B"
+    eqtl_filter: "Qwen3-235B-A22B"
+    schema_analyzer: "Qwen3-235B-A22B"
+    quality_assessor: "Qwen3-235B-A22B"
+    
+  # Temperature settings for different agents
+  temperature:
+    default: 0.7
+    data_analyzer: 0.6
+    data_cleaner: 0.5
+    eqtl_filter: 0.7
+    schema_analyzer: 0.3
+    quality_assessor: 0.6
+    
+  # Reasoning effort levels
+  reasoning_effort:
+    default: "medium"
+    data_analyzer: "high"
+    data_cleaner: "medium"
+    eqtl_filter: "high"
+    schema_analyzer: "low"
+    quality_assessor: "medium"
+
+  # Data processing settings
+  data_processing:
+    max_records_per_batch: 1000
+    max_analysis_records: 10000
+    chunk_size: 100
+    parallel_workers: 4
+    
+  # sc-eQTL specific filters
+  eqtl_filters:
+    min_cells: 100
+    min_genes: 5000
+    required_assays: ["RNA-seq", "scRNA-seq", "single-cell RNA-seq"]
+    preferred_organisms: ["Homo sapiens", "Mus musculus"]
+    required_metadata: ["cell_type", "tissue", "individual"]
+    
+  # Quality thresholds
+  quality_thresholds:
+    min_quality_score: 0.7
+    max_missing_metadata: 0.3
+    min_sample_size: 50
+
+test:
+  db_name: "scagent_test"
+  # Inherit from default but with smaller limits
+  data_processing:
+    max_records_per_batch: 100
+    max_analysis_records: 1000
+    chunk_size: 10
+    parallel_workers: 2
+
+prod:
+  db_name: "scagent_prod"
+  # Production settings with higher limits
+  data_processing:
+    max_records_per_batch: 5000
+    max_analysis_records: 100000
+    chunk_size: 500
+    parallel_workers: 8 
