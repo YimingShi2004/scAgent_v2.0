@@ -22,8 +22,8 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/scAgent.git
-cd scAgent
+git clone https://github.com/YimingShi2004/scAgent_v2.0.git
+cd scAgent_v2.0
 
 # Install dependencies
 pip install -r requirements.txt
