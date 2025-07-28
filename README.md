@@ -115,15 +115,14 @@ If you use scAgent in your research, please cite:
 
 ```
 scAgent: AI-Powered Single-Cell Analysis for sc-eQTL
-https://github.com/yourusername/scAgent
+https://github.com/YimingShi2004/scAgent_v2.0
 ```
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - PostgreSQL for robust data storage
 - Qwen team for LLM capabilities
 - Single-cell genomics community
-
----
+- Yiming SHI & Yanglab & Wuhan Zhang
 
 For detailed documentation, see [README_COMPREHENSIVE_ANALYSIS.md](README_COMPREHENSIVE_ANALYSIS.md) 
