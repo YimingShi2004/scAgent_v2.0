@@ -1,128 +1,376 @@
-# 🧬 scAgent: AI-Powered Single-Cell Analysis for sc-eQTL
+# Enhanced sc-eQTL Analysis System v2.2 Jul 30/2025
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-316192.svg)](https://www.postgresql.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## Overview
 
-**scAgent** is a high-performance bioinformatics tool for identifying and filtering human single-cell RNA-seq datasets suitable for single-cell expression quantitative trait loci (sc-eQTL) analysis. It leverages AI to intelligently process millions of genomic datasets with unprecedented speed and accuracy.
+The Enhanced sc-eQTL Analysis System is a comprehensive solution for discovering and analyzing human single-cell datasets suitable for sc-eQTL (single-cell expression quantitative trait loci) analysis. This system provides advanced filtering, metadata extraction, and data access capabilities.
 
-## ✨ Key Features
+## Key Features
 
-- 🚀 **10x Faster Processing** with parallel AI execution (v2.0)
-- 🤖 **AI-Powered Detection** for ambiguous RNA-seq classification
-- 🧬 **Robust Human Sample Identification** from multiple metadata fields
-- 🚫 **Automatic Cell Line Exclusion** with pattern recognition
-- 📊 **10 Key sc-eQTL Criteria Extraction** for comprehensive analysis
-- 📈 **Real-time Progress Visualization** with performance metrics
-- 💾 **Comprehensive CSV Output** with all filtering results
+### 🔗 SRA Lite URL Generation
+- **Automatic URL Generation**: Generates SRA Lite URLs for data access
+- **Download Options**: Includes both data access and download URLs
+- **Configurable Output**: Can include or exclude download URLs based on user preference
 
-## 🚀 Quick Start
+### 🧬 Enhanced Dataset Classification
+- **scRNA-seq vs scATAC-seq**: Intelligent classification of single-cell experiment types
+- **Technology Detection**: Identifies specific technologies (10x, Smart-seq, Drop-seq, etc.)
+- **Confidence Scoring**: Provides confidence scores for classifications
 
-### Installation
+### 🏥 Tumor vs Normal Tissue Detection
+- **Automatic Detection**: Identifies tumor samples vs normal tissue
+- **Tumor Type Classification**: Categorizes specific tumor types
+- **AI-Assisted Analysis**: Uses AI for sophisticated tumor detection
 
+### 🧪 Cell Line Detection and Exclusion
+- **Comprehensive Detection**: Identifies cell line samples using multiple indicators
+- **Automatic Exclusion**: Excludes cell lines from sc-eQTL analysis
+- **Configurable Rules**: Customizable detection patterns
+
+### 📊 Age Information Extraction
+- **Multiple Formats**: Handles various age formats (years, months, days, postnatal days)
+- **Pattern Recognition**: Uses regex patterns to extract age information
+- **Source Tracking**: Tracks the source field of age information
+
+### 📚 PMC Document Analysis
+- **Full-Text Extraction**: Extracts detailed information from PMC PDFs
+- **AI-Powered Analysis**: Uses AI to analyze publication content
+- **Comprehensive Metadata**: Extracts age, sample size, geographic location, disease status
+
+### 🚀 GPU-Accelerated Processing
+- **Parallel Processing**: Multi-threaded processing for high performance
+- **GPU Support**: Optional GPU acceleration for AI operations
+- **Memory Optimization**: Efficient memory management for large datasets
+
+### 📈 Quality Assessment
+- **Multi-dimensional Scoring**: Comprehensive quality metrics
+- **Configurable Thresholds**: Adjustable quality thresholds
+- **Performance Monitoring**: Real-time performance tracking
+
+## Installation
+
+### Prerequisites
+- Python 3.8+
+- PostgreSQL database
+- GPU support (optional, for acceleration)
+
+### Setup
 ```bash
-# Clone repository
-git clone https://github.com/YimingShi2004/scAgent_v2.0.git
-cd scAgent_v2.0
+# Clone the repository
+git clone <repository-url>
+cd scAgent_v2.1
 
-# Install dependencies
-pip install -r requirements.txt
+# Install enhanced requirements
+pip install -r requirements_enhanced.txt
 
 # Configure database connection
-cp scAgent/settings_template.yml scAgent/settings.yml
+cp scAgent_2025/settings_enhanced.yml scAgent_2025/settings.yml
 # Edit settings.yml with your database credentials
 ```
 
+## Configuration
+
+### Database Configuration
+```yaml
+database:
+  host: "localhost"
+  port: 5432
+  database: "scagent_db"
+  user: "scagent_user"
+  password: "${DB_PASSWORD}"
+  schema: "merged"
+  table: "sra_geo_ft2"
+```
+
+### AI Model Configuration
+```yaml
+ai_models:
+  primary:
+    model_name: "Qwen3-235B-A22B"
+    api_base: "http://10.28.1.21:30080/v1"
+    max_tokens: 32000
+    temperature: 0.2
+```
+
+### Processing Configuration
+```yaml
+processing:
+  max_ai_workers: 20
+  max_db_workers: 10
+  batch_size: 5000
+  enable_gpu: true
+```
+
+## Usage
+
 ### Basic Usage
 
-```bash
-# Test run with 1000 samples
-python comprehensive_human_sc_analysis.py --test-run
+```python
+from enhanced_sc_eqtl_analysis import EnhancedScEqtlAnalysis
 
-# Quick scan of 10,000 samples
-python comprehensive_human_sc_analysis.py --quick-scan 10000
+# Initialize analysis system
+analysis = EnhancedScEqtlAnalysis(
+    max_ai_workers=20,
+    enable_gpu=True,
+    include_download_urls=True
+)
 
-# Full database scan with maximum performance
-python comprehensive_human_sc_analysis.py --fullscan --ai-workers 15
+# Run comprehensive analysis
+result = analysis.run_enhanced_analysis(
+    max_samples=10000,
+    batch_size=5000,
+    output_file="enhanced_results.csv",
+    enable_ai=True
+)
 ```
 
-## 📊 Performance
-
-With v2.0's parallel processing:
-
-- **1,000 samples**: ~15 seconds (was 2.5 minutes)
-- **10,000 samples**: ~2.5 minutes (was 25 minutes)
-- **100,000 samples**: ~25 minutes (was 4+ hours)
-
-## 🔧 Advanced Usage
-
-### Custom Configuration
+### Command Line Usage
 
 ```bash
-# Process specific number of samples with custom output
-python comprehensive_human_sc_analysis.py \
-    --max-samples 50000 \
-    --batch-size 5000 \
-    --output results_50k.csv \
-    --ai-workers 10
+# Quick test run
+python enhanced_sc_eqtl_analysis.py --test-run
+
+# Process specific number of samples
+python enhanced_sc_eqtl_analysis.py --quick-scan 10000 --batch-size 2000
+
+# Full database scan with download URLs
+python enhanced_sc_eqtl_analysis.py --fullscan --include-downloads
+
+# High-performance mode
+python enhanced_sc_eqtl_analysis.py --quick-scan 50000 --ai-workers 20
 ```
 
-### Filtering Pipeline
+### Advanced Usage
 
-1. **Human Detection**: Multi-field validation including mixed species handling
-2. **Cell Line Exclusion**: Pattern-based detection from characteristics
-3. **Single-Cell Identification**: Direct markers + AI for boundary cases
-4. **sc-eQTL Criteria Extraction**: 10 key fields for downstream analysis
+```python
+# Custom configuration
+analysis = EnhancedScEqtlAnalysis(
+    max_ai_workers=15,
+    enable_gpu=False,
+    include_download_urls=False
+)
 
-## 📋 Output Format
-
-The tool generates two files:
-
-- `comprehensive_human_sc_analysis_YYYYMMDD_HHMMSS.csv`: Complete results with all 82 columns + filtering metadata
-- `comprehensive_human_sc_analysis_YYYYMMDD_HHMMSS_statistics.json`: Processing statistics and performance metrics
-
-### Key Output Fields
-
-- All original database columns
-- Filter pass/fail status with confidence scores
-- 10 extracted sc-eQTL criteria
-- AI assistance indicators
-- Processing time per sample
-
-## 🏗️ Architecture
-
-```
-scAgent/
-├── comprehensive_human_sc_analysis.py    # Main analysis script
-├── scAgent/
-│   ├── utils_sra_geo_ft2_optimizer.py  # Core filtering logic
-│   ├── db/                              # Database handlers
-│   └── models/                          # AI model integration
-└── find_human_samples_test.py           # Testing utilities
+# Process with custom filters
+result = analysis.run_enhanced_analysis(
+    max_samples=5000,
+    batch_size=1000,
+    output_file="custom_results.csv",
+    enable_ai=True
+)
 ```
 
-## 🤝 Contributing
+## Output Format
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### CSV Output Fields
 
-## 📄 License
+The enhanced analysis produces a comprehensive CSV file with the following fields:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+#### Basic Information
+- `sra_ID`: SRA run identifier
+- `gsm_title`: GEO sample title
+- `gse_title`: GEO series title
+- `experiment_title`: Experiment title
+- `organism_ch1`: Organism information
 
-## 📚 Citation
+#### Enhanced Metadata
+- `experiment_type`: scRNA-seq or scATAC-seq
+- `sc_technology`: Specific technology used
+- `is_tumor`: Tumor status (True/False)
+- `tumor_type`: Specific tumor type
+- `is_cell_line`: Cell line status (True/False)
+- `cell_line_name`: Cell line name if applicable
 
-If you use scAgent in your research, please cite:
+#### Age Information
+- `age_value`: Extracted age value
+- `age_unit`: Age unit (years, months, days, etc.)
+- `age_source`: Source field of age information
+- `age_confidence`: Confidence score for age extraction
 
+#### Sample Information
+- `estimated_sample_size`: Estimated sample size
+- `sample_size_source`: Source of sample size information
+- `sample_size_confidence`: Confidence score for sample size
+
+#### Publication Information
+- `pmid`: PubMed ID
+- `doi`: Digital Object Identifier
+- `journal`: Journal name
+- `publication_date`: Publication date
+- `authors`: Author information
+
+#### Geographic and Demographic
+- `geographic_location`: Geographic location
+- `ethnicity`: Ethnicity information
+- `gender`: Gender information
+- `health_status`: Health status
+
+#### Quality Metrics
+- `data_completeness`: Data completeness score
+- `metadata_richness`: Metadata richness score
+- `overall_quality_score`: Overall quality score
+- `final_confidence_score`: Final confidence score
+
+#### URLs
+- `sra_lite_url`: SRA Lite data access URL
+- `data_access_url`: Data access URL
+- `fastq_download_url`: FASTQ download URL (if enabled)
+- `sra_download_url`: SRA download URL (if enabled)
+
+#### Filter Results
+- `passes_all_filters`: Overall filter result
+- `human_check_passed`: Human sample check
+- `cell_line_check_passed`: Cell line exclusion check
+- `single_cell_check_passed`: Single-cell experiment check
+- `tumor_check_passed`: Tumor status check
+- `quality_check_passed`: Quality threshold check
+
+### Statistics Output
+
+The system also generates a JSON statistics file with:
+- Processing statistics
+- Quality metrics
+- Performance data
+- Error summaries
+
+## PMC Analysis
+
+### Features
+- **Automatic PMC ID Discovery**: Finds PMC IDs from PMIDs
+- **Full-Text Extraction**: Extracts complete text from PMC documents
+- **AI-Powered Analysis**: Uses AI to analyze publication content
+- **Comprehensive Metadata**: Extracts detailed information
+
+### Usage
+```python
+from scAgent_2025.utils_pmc_analyzer import PmcAnalyzer
+
+# Initialize PMC analyzer
+pmc_analyzer = PmcAnalyzer()
+
+# Analyze single PMID
+result = pmc_analyzer.analyze_pmid_comprehensive("12345678")
+
+# Batch analyze multiple PMIDs
+pmids = ["12345678", "87654321", "11223344"]
+results = pmc_analyzer.batch_analyze_pmids(pmids, max_workers=5)
 ```
-scAgent: AI-Powered Single-Cell Analysis for sc-eQTL
-https://github.com/YimingShi2004/scAgent_v2.0
+
+## Performance Optimization
+
+### GPU Acceleration
+- Enable GPU support for AI operations
+- Configure GPU memory usage
+- Monitor GPU utilization
+
+### Parallel Processing
+- Multi-threaded database queries
+- Parallel AI analysis
+- Batch processing optimization
+
+### Memory Management
+- Efficient memory usage
+- Garbage collection optimization
+- Memory monitoring
+
+## Error Handling
+
+### Retry Logic
+- Automatic retry for failed operations
+- Exponential backoff
+- Configurable retry limits
+
+### Error Reporting
+- Detailed error logging
+- Error categorization
+- Performance impact tracking
+
+## Monitoring and Logging
+
+### Logging Configuration
+- Configurable log levels
+- File rotation
+- Performance metrics logging
+
+### Progress Tracking
+- Real-time progress updates
+- Batch processing statistics
+- Performance monitoring
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Database Connection Errors**
+   - Check database credentials
+   - Verify network connectivity
+   - Ensure database is running
+
+2. **AI Model Errors**
+   - Verify API endpoints
+   - Check API keys
+   - Monitor rate limits
+
+3. **Memory Issues**
+   - Reduce batch size
+   - Enable garbage collection
+   - Monitor memory usage
+
+4. **Performance Issues**
+   - Increase worker count
+   - Enable GPU acceleration
+   - Optimize database queries
+
+### Debug Mode
+```bash
+# Enable debug mode
+python enhanced_sc_eqtl_analysis.py --debug
+
+# Verbose output
+python enhanced_sc_eqtl_analysis.py --verbose
 ```
 
-##  Acknowledgments
+## Contributing
 
-- PostgreSQL for robust data storage
-- Qwen team for LLM capabilities
-- Single-cell genomics community
-- Yiming SHI & Yanglab & Wuhan Zhang
+### Development Setup
+```bash
+# Install development dependencies
+pip install -r requirements_enhanced.txt
 
-For detailed documentation, see [README_COMPREHENSIVE_ANALYSIS.md](README_COMPREHENSIVE_ANALYSIS.md) 
+# Run tests
+pytest tests/
+
+# Code formatting
+black scAgent_2025/
+flake8 scAgent_2025/
+```
+
+### Adding New Features
+1. Create feature branch
+2. Implement functionality
+3. Add tests
+4. Update documentation
+5. Submit pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For support and questions:
+- Create an issue on GitHub
+- Check the documentation
+- Review troubleshooting guide
+
+## Changelog
+
+### Version 2.1 (Enhanced)
+- Added SRA Lite URL generation
+- Enhanced age information extraction
+- Added tumor vs normal tissue detection
+- Improved scRNA-seq vs scATAC-seq classification
+- Added cell line detection and exclusion
+- Integrated PMC document analysis
+- Added GPU acceleration support
+- Enhanced quality assessment
+- Improved parallel processing
+- Added comprehensive error handling 
