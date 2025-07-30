@@ -1,0 +1,25 @@
+{
+  "processing_statistics": {
+    "total_processed": 2000,
+    "human_samples": 1812,
+    "passed_all_filters": 4,
+    "single_cell_identified": 83,
+    "cell_lines_excluded": 807,
+    "tumor_samples": 1052,
+    "ai_assisted_decisions": 0,
+    "processing_errors": 0,
+    "scrna_seq_count": 4,
+    "scatac_seq_count": 79
+  },
+  "result_summary": {
+    "total_results": 2000,
+    "passed_filters": 4,
+    "pass_rate_percentage": 0.2,
+    "average_confidence_score": 0.4490225000000039,
+    "scrna_seq_count": 4,
+    "scatac_seq_count": 79,
+    "tumor_samples": 1052
+  },
+  "generated_at": "2025-07-29T23:41:39.988504",
+  "script_version": "enhanced_v1.0_parallel"
+}

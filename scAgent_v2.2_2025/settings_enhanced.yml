@@ -1,0 +1,252 @@
+# Enhanced sc-eQTL Analysis Configuration
+# This file contains all settings for the enhanced analysis system
+
+# Database Configuration
+database:
+  host: "localhost"
+  port: 5432
+  database: "scagent_db"
+  user: "scagent_user"
+  password: "${DB_PASSWORD}"
+  schema: "merged"
+  table: "sra_geo_ft2"
+
+# AI Model Configuration
+ai_models:
+  # Primary AI client (Qwen)
+  primary:
+    model_name: "Qwen3-235B-A22B"
+    api_base: "http://10.28.1.21:30080/v1"
+    max_tokens: 32000
+    temperature: 0.2
+    enable_thinking: true
+  
+  # Backup AI clients
+  backup:
+    openai:
+      model_name: "gpt-4"
+      api_key: "${OPENAI_API_KEY}"
+      max_tokens: 4000
+      temperature: 0.2
+    
+    anthropic:
+      model_name: "claude-3-sonnet-20240229"
+      api_key: "${ANTHROPIC_API_KEY}"
+      max_tokens: 4000
+      temperature: 0.2
+
+# Processing Configuration
+processing:
+  # Parallel processing settings
+  max_ai_workers: 20
+  max_db_workers: 10
+  batch_size: 5000
+  processing_batch_size: 1000
+  
+  # GPU acceleration
+  enable_gpu: true
+  gpu_memory_fraction: 0.8
+  
+  # Memory management
+  max_memory_usage: "16GB"
+  enable_memory_monitoring: true
+
+# URL Generation Configuration
+urls:
+  # SRA Lite URLs
+  sra_lite_base: "https://trace.ncbi.nlm.nih.gov/Traces/?view=run_browser&acc="
+  include_download_urls: true
+  
+  # PMC URLs
+  pmc_base: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC"
+  pubmed_base: "https://pubmed.ncbi.nlm.nih.gov/"
+
+# PMC Analysis Configuration
+pmc_analysis:
+  # API settings
+  enable_pmc_analysis: true
+  max_pmc_workers: 5
+  pmc_rate_limit_delay: 0.1  # seconds
+  
+  # Text extraction settings
+  max_text_length: 2000
+  enable_ai_analysis: true
+  
+  # Caching
+  enable_pmc_cache: true
+  pmc_cache_ttl: 86400  # 24 hours
+
+# Enhanced Filtering Configuration
+filtering:
+  # Age extraction
+  age_patterns:
+    - "age\\s*:\\s*([^;,\\n]+)"
+    - "age\\s*=\\s*([^;,\\n]+)"
+    - "(\\d+)\\s*(?:years?|y\\.?o\\.?|yrs?)"
+    - "(\\d+)\\s*(?:months?|mos?)"
+    - "(\\d+)\\s*(?:days?|d)"
+    - "p(\\d+)"
+    - "embryonic\\s*day\\s*(\\d+)"
+    - "e(\\d+)"
+    - "(\\d+)\\s*(?:week|wk)s?"
+    - "(\\d+)\\s*(?:hour|hr)s?"
+  
+  # Tumor detection
+  tumor_indicators:
+    - "tumor"
+    - "cancer"
+    - "carcinoma"
+    - "adenocarcinoma"
+    - "sarcoma"
+    - "leukemia"
+    - "lymphoma"
+    - "melanoma"
+    - "glioblastoma"
+    - "metastasis"
+    - "malignant"
+    - "neoplasm"
+    - "oncogenic"
+    - "tumorigenic"
+    - "cancerous"
+  
+  # Cell line detection
+  cell_line_indicators:
+    - "cell line"
+    - "cellline"
+    - "cl-"
+    - "cl "
+    - "hepg2"
+    - "hela"
+    - "jurkat"
+    - "k562"
+    - "a549"
+    - "mcf7"
+    - "pc3"
+    - "du145"
+    - "lncap"
+    - "skov3"
+    - "ovcar"
+    - "ht29"
+    - "sw480"
+    - "caco2"
+    - "beas2b"
+    - "hek293"
+    - "cos7"
+    - "cho"
+    - "immortalized"
+    - "transformed"
+    - "cancer cell line"
+  
+  # Single-cell technology indicators
+  sc_technologies:
+    scrna_seq:
+      - "10x"
+      - "smart-seq"
+      - "drop-seq"
+      - "cel-seq"
+      - "mars-seq"
+      - "quartz-seq"
+      - "single-cell rna"
+      - "scrna"
+    scatac_seq:
+      - "10x atac"
+      - "sci-atac"
+      - "sci-atac-seq"
+      - "droplet atac"
+      - "atac-seq"
+      - "single-cell atac"
+      - "scatac"
+
+# Quality Assessment Configuration
+quality:
+  # Minimum quality thresholds
+  min_data_completeness: 0.5
+  min_metadata_richness: 0.3
+  min_overall_quality: 0.4
+  min_confidence_score: 0.6
+  
+  # Quality scoring weights
+  weights:
+    data_completeness: 0.4
+    metadata_richness: 0.3
+    publication_info: 0.2
+    technical_details: 0.1
+
+# Output Configuration
+output:
+  # CSV output settings
+  csv_encoding: "utf-8"
+  include_all_fields: true
+  include_download_urls: true
+  
+  # Statistics output
+  save_statistics: true
+  statistics_format: "json"
+  
+  # Progress reporting
+  progress_update_interval: 10  # batches
+  detailed_logging: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "enhanced_sc_eqtl_analysis.log"
+  max_file_size: "100MB"
+  backup_count: 5
+  
+  # Performance logging
+  log_performance_metrics: true
+  log_memory_usage: true
+  log_processing_times: true
+
+# Error Handling Configuration
+error_handling:
+  # Retry settings
+  max_retries: 3
+  retry_delay: 1.0  # seconds
+  exponential_backoff: true
+  
+  # Error reporting
+  log_errors: true
+  save_error_details: true
+  continue_on_error: true
+
+# Performance Optimization
+performance:
+  # Database optimization
+  use_connection_pooling: true
+  pool_size: 10
+  max_overflow: 20
+  
+  # Caching
+  enable_result_cache: true
+  cache_ttl: 3600  # 1 hour
+  
+  # Memory optimization
+  enable_garbage_collection: true
+  gc_frequency: 100  # every 100 batches
+
+# Security Configuration
+security:
+  # API key management
+  encrypt_api_keys: true
+  key_rotation_enabled: false
+  
+  # Data privacy
+  anonymize_personal_data: true
+  log_sensitive_data: false
+
+# Development Configuration
+development:
+  # Debug mode
+  debug_mode: false
+  verbose_output: false
+  
+  # Testing
+  test_mode: false
+  mock_ai_responses: false
+  
+  # Development tools
+  enable_profiling: false
+  enable_tracing: false 
