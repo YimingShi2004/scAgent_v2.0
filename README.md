@@ -256,11 +256,6 @@ results = pmc_analyzer.batch_analyze_pmids(pmids, max_workers=5)
 
 ## Performance Optimization
 
-### GPU Acceleration
-- Enable GPU support for AI operations
-- Configure GPU memory usage
-- Monitor GPU utilization
-
 ### Parallel Processing
 - Multi-threaded database queries
 - Parallel AI analysis
@@ -363,7 +358,7 @@ For support and questions:
 
 ## Changelog
 
-### Version 2.1 (Enhanced)
+### Version 2.2
 - Added SRA Lite URL generation
 - Enhanced age information extraction
 - Added tumor vs normal tissue detection
