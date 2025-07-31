@@ -55,9 +55,9 @@ The Enhanced sc-eQTL Analysis System is a comprehensive solution for discovering
 
 ### Setup
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd scAgent_v2.1
+# git clone
+git clone https://github.com/YimingShi2004/scAgent_v2.2.git
+cd scAgent_v2.2
 
 # Install enhanced requirements
 pip install -r requirements_enhanced.txt
