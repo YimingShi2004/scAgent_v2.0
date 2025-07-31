@@ -509,17 +509,17 @@ class EnhancedScEqtlAnalysis:
 ║        ENHANCED sc-eQTL ANALYSIS WITH ULTRA-OPTIMIZED PROCESSING             ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║ Configuration:                                                               ║
-║   • Start Time         : {start_time.strftime('%Y-%m-%d %H:%M:%S')}                         ║
-║   • Max Samples        : {str(max_samples or 'ALL'):>10}                                  ║
-║   • Batch Size         : {batch_size:>10,}                                  ║
-║   • AI Assistance      : {('ENABLED' if enable_ai else 'DISABLED'):>10}                                  ║
-║   • Max AI Workers     : {self.max_ai_workers:>10}                                  ║
-║   • GPU Acceleration   : {('ENABLED' if self.optimizer.enable_gpu else 'DISABLED'):>10}                                  ║
-║   • GPU Device         : {str(self.optimizer.device):>10}                                  ║
-║   • GPU Batch Size     : {gpu_batch_size:>10}                                  ║
-║   • Download URLs      : {('INCLUDED' if self.include_download_urls else 'EXCLUDED'):>10}                                  ║
-║   • Auto Download      : {('ENABLED' if auto_download else 'DISABLED'):>10}                                  ║
-║   • Output File        : {output_file[:40]:<40} ║
+║   • Start Time         : {start_time.strftime('%Y-%m-%d %H:%M:%S')}          ║
+║   • Max Samples        : {str(max_samples or 'ALL'):>10}                     ║
+║   • Batch Size         : {batch_size:>10,}                                   ║
+║   • AI Assistance      : {('ENABLED' if enable_ai else 'DISABLED'):>10}      ║
+║   • Max AI Workers     : {self.max_ai_workers:>10}                           ║
+║   • GPU Acceleration   : {('ENABLED' if self.optimizer.enable_gpu else 'DISABLED'):>10} ║
+║   • GPU Device         : {str(self.optimizer.device):>10}                    ║
+║   • GPU Batch Size     : {gpu_batch_size:>10}                                ║
+║   • Download URLs      : {('INCLUDED' if self.include_download_urls else 'EXCLUDED'):>10}║
+║   • Auto Download      : {('ENABLED' if auto_download else 'DISABLED'):>10}  ║
+║   • Output File        : {output_file[:40]:<40}                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
         logger.info(startup_banner)
@@ -605,26 +605,25 @@ class EnhancedScEqtlAnalysis:
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    ENHANCED PROGRESS STATISTICS                              ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║ Total Processed        : {stats['total_processed']:>10,} samples                             ║
-║ Human Samples          : {stats['human_samples']:>10,} confirmed                           ║
-║ Single-Cell Identified : {stats['single_cell_identified']:>10,} experiments                      ║
-║   ├─ scRNA-seq         : {stats['scrna_seq_count']:>10,} experiments                      ║
-║   └─ scATAC-seq        : {stats['scatac_seq_count']:>10,} experiments                      ║
-║ Cell Lines Excluded    : {stats['cell_lines_excluded']:>10,} samples                             ║
-║ Tumor Samples          : {stats['tumor_samples']:>10,} samples                             ║
-║ Passed All Filters     : {stats['passed_all_filters']:>10,} datasets                            ║
-║ AI-Assisted Decisions  : {stats['ai_assisted_decisions']:>10,} cases                               ║
-║ Processing Errors      : {stats['processing_errors']:>10,} errors                              ║
+║ Total Processed        : {stats['total_processed']:>10,} samples             ║
+║ Human Samples          : {stats['human_samples']:>10,} confirmed             ║
+║ Single-Cell Identified : {stats['single_cell_identified']:>10,} experiments  ║
+║   ├─ scRNA-seq         : {stats['scrna_seq_count']:>10,} experiments         ║
+║   └─ scATAC-seq        : {stats['scatac_seq_count']:>10,} experiments        ║
+║ Cell Lines Excluded    : {stats['cell_lines_excluded']:>10,} samples         ║
+║ Tumor Samples          : {stats['tumor_samples']:>10,} samples               ║
+║ Passed All Filters     : {stats['passed_all_filters']:>10,} datasets         ║
+║ AI-Assisted Decisions  : {stats['ai_assisted_decisions']:>10,} cases         ║
+║ Processing Errors      : {stats['processing_errors']:>10,} errors            ║
 """
-        
-        if stats['total_processed'] > 0:
-            pass_rate = (stats['passed_all_filters'] / stats['total_processed']) * 100
-            sc_rate = (stats['single_cell_identified'] / stats['human_samples']) * 100 if stats['human_samples'] > 0 else 0
+  if stats['total_processed'] > 0:
+ pass_rate = (stats['passed_all_filters'] / stats['total_processed']) * 100
+sc_rate = (stats['single_cell_identified'] / stats['human_samples']) * 100 if stats['human_samples'] > 0 else 0
             tumor_rate = (stats['tumor_samples'] / stats['human_samples']) * 100 if stats['human_samples'] > 0 else 0
             report += f"""╠══════════════════════════════════════════════════════════════════════════════╣
-║ Overall Pass Rate      : {pass_rate:>9.2f}% of all samples                         ║
-║ Single-Cell Rate       : {sc_rate:>9.2f}% of human samples                       ║
-║ Tumor Sample Rate      : {tumor_rate:>9.2f}% of human samples                       ║
+║ Overall Pass Rate      : {pass_rate:>9.2f}% of all samples                   ║
+║ Single-Cell Rate       : {sc_rate:>9.2f}% of human samples                   ║
+║ Tumor Sample Rate      : {tumor_rate:>9.2f}% of human samples                ║
 """
         
         report += "╚══════════════════════════════════════════════════════════════════════════════╝"
@@ -649,31 +648,31 @@ class EnhancedScEqtlAnalysis:
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ┌─────────────────────── PROCESSING PERFORMANCE ──────────────────────┐
-│ Total Processing Time  : {int(hours):02d}h {int(minutes):02d}m {int(seconds):02d}s                             │
-│ Processing Rate        : {timing['samples_per_second']:>8.1f} samples/second                    │
-│ Start Time             : {timing['start_time'][:19]}                      │
-│ End Time               : {timing['end_time'][:19]}                        │
+│ Total Processing Time  : {int(hours):02d}h {int(minutes):02d}m {int(seconds):02d}s │
+│ Processing Rate        : {timing['samples_per_second']:>8.1f} samples/second  │
+│ Start Time             : {timing['start_time'][:19]}               │
+│ End Time               : {timing['end_time'][:19]}                 │
 └────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────── ENHANCED SAMPLE STATISTICS ──────────────────┐
-│ Total Processed        : {stats['total_processed']:>10,} samples                      │
+│ Total Processed        : {stats['total_processed']:>10,} samples    │
 │ Human Samples          : {stats['human_samples']:>10,} confirmed ({(stats['human_samples']/stats['total_processed']*100 if stats['total_processed'] > 0 else 0):>5.1f}%)           │
 │ Single-Cell Identified : {stats['single_cell_identified']:>10,} experiments ({(stats['single_cell_identified']/stats['human_samples']*100 if stats['human_samples'] > 0 else 0):>5.1f}%)         │
-│   ├─ scRNA-seq         : {stats['scrna_seq_count']:>10,} experiments                      │
-│   └─ scATAC-seq        : {stats['scatac_seq_count']:>10,} experiments                      │
-│ Cell Lines Excluded    : {stats['cell_lines_excluded']:>10,} samples                      │
+│   ├─ scRNA-seq         : {stats['scrna_seq_count']:>10,} experiments │
+│   └─ scATAC-seq        : {stats['scatac_seq_count']:>10,} experiments│
+│ Cell Lines Excluded    : {stats['cell_lines_excluded']:>10,} samples │
 │ Tumor Samples          : {stats['tumor_samples']:>10,} samples ({(stats['tumor_samples']/stats['human_samples']*100 if stats['human_samples'] > 0 else 0):>5.1f}%)           │
 │ AI-Assisted Decisions  : {stats['ai_assisted_decisions']:>10,} cases ({(stats['ai_assisted_decisions']/stats['total_processed']*100 if stats['total_processed'] > 0 else 0):>5.1f}%)              │
-│ Processing Errors      : {stats['processing_errors']:>10,} errors                         │
+│ Processing Errors      : {stats['processing_errors']:>10,} errors    │
 └────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────── ENHANCED FINAL RESULTS ─────────────────────┐
-│ Passed All Filters     : {results['passed_all_filters']:>10,} datasets                     │
-│ Overall Pass Rate      : {results['overall_pass_rate']:>9.2f}% of all samples             │
-│ scRNA-seq Datasets     : {results['scrna_seq_count']:>10,} experiments                     │
-│ scATAC-seq Datasets    : {results['scatac_seq_count']:>10,} experiments                     │
-│ Tumor Datasets         : {results['tumor_samples']:>10,} samples                            │
-│ Output File            : {results['output_file']:<40} │
+│ Passed All Filters     : {results['passed_all_filters']:>10,} datasets   │
+│ Overall Pass Rate      : {results['overall_pass_rate']:>9.2f}% of all samples    │
+│ scRNA-seq Datasets     : {results['scrna_seq_count']:>10,} experiments │
+│ scATAC-seq Datasets    : {results['scatac_seq_count']:>10,} experiments  │
+│ Tumor Datasets         : {results['tumor_samples']:>10,} samples   │
+│ Output File            : {results['output_file']:<40}              │
 └────────────────────────────────────────────────────────────────────┘
 """
         
@@ -683,24 +682,24 @@ class EnhancedScEqtlAnalysis:
         if results['passed_all_filters'] > 0:
             success_msg = f"""
 ╔══════════════════════════════════════════════════════════════════════════════╗
-║                              🎉 ENHANCED SUCCESS 🎉                          ║
+║                              🎉 ENHANCED SUCCESS 🎉                           ║
 ║                                                                              ║
-║  Found {results['passed_all_filters']:>6,} high-quality human single-cell datasets suitable      ║
-║  for sc-eQTL analysis with comprehensive metadata!                          ║
+║  Found {results['passed_all_filters']:>6,} high-quality human single-cell datasets suitable ║
+║  for sc-eQTL analysis with comprehensive metadata!                           ║
 ║                                                                              ║
 ║  Enhanced Features:                                                          ║
-║  • SRA Lite URLs with download options                                      ║
-║  • Age information extraction                                               ║
-║  • Tumor vs normal tissue classification                                    ║
-║  • scRNA-seq vs scATAC-seq differentiation                                 ║
-║  • Cell line detection and exclusion                                        ║
-║  • Comprehensive metadata extraction                                        ║
+║  • SRA Lite URLs with download options                                       ║
+║  • Age information extraction                                                ║
+║  • Tumor vs normal tissue classification                                     ║
+║  • scRNA-seq vs scATAC-seq differentiation                                   ║
+║  • Cell line detection and exclusion                                         ║
+║  • Comprehensive metadata extraction                                         ║
 ║                                                                              ║
 ║  Next steps:                                                                 ║
-║  1. Review the enhanced output CSV file for detailed results                ║
-║  2. Check the enhanced statistics JSON file for processing metadata         ║
-║  3. Use SRA Lite URLs for data access and download                          ║
-║  4. Consider running deeper analysis on filtered datasets                   ║
+║  1. Review the enhanced output CSV file for detailed results                 ║
+║  2. Check the enhanced statistics JSON file for processing metadata          ║
+║  3. Use SRA Lite URLs for data access and download                           ║
+║  4. Consider running deeper analysis on filtered datasets                    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
             logger.info(success_msg)
@@ -709,14 +708,14 @@ class EnhancedScEqtlAnalysis:
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                              ⚠️  ENHANCED WARNING ⚠️                          ║
 ║                                                                              ║
-║  No samples passed all enhanced filters!                                    ║
+║  No samples passed all enhanced filters!                                     ║
 ║                                                                              ║
 ║  Suggestions:                                                                ║
-║  1. Review enhanced filter criteria - may be too restrictive                ║
-║  2. Check data quality in the source table                                  ║
-║  3. Enable AI assistance if not already enabled                             ║
-║  4. Consider processing a larger sample set                                 ║
-║  5. Verify age, tumor, and cell line detection parameters                   ║
+║  1. Review enhanced filter criteria - may be too restrictive                 ║
+║  2. Check data quality in the source table                                   ║
+║  3. Enable AI assistance if not already enabled                              ║
+║  4. Consider processing a larger sample set                                  ║
+║  5. Verify age, tumor, and cell line detection parameters                    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
             logger.info(warning_msg)
